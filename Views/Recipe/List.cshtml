@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Recipe>
+@foreach (var p in Model)
+{
+    <div>
+        <h3>@p.RecipeTitle</h3>
+        @p.CategoryId
+        
+    </div>
+}
