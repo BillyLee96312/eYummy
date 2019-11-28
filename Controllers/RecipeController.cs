@@ -25,7 +25,8 @@ namespace eYummy.Controllers
 
 
         private UserDetailModel userDetailModel;
-        
+        private SearchRecipeModel searchRecipeModel;
+
 
         public RecipeController(IRecipeRepository recipeRepository, 
                                 IIngredientDetailRepository ingredientDetailRepository,
@@ -50,8 +51,12 @@ namespace eYummy.Controllers
 
         public ViewResult Display()
         {
-            return View(Recipes);
+            return View("../Recipe/Display", new SearchRecipeModel
+            {
+                RecipeCollection = Recipes
+            });
         }
+
         [HttpGet]
         public ViewResult UserDetail(string id)
         {
@@ -75,7 +80,7 @@ namespace eYummy.Controllers
         {
             if (String.IsNullOrEmpty(searchCategoryName) && String.IsNullOrEmpty(searchString))
             {
-                return View("../Recipe/Display", new RecipesListViewModel
+                return View("../Recipe/Display", new SearchRecipeModel
                 {
                     RecipeCollection = Recipes
                     .OrderBy(r => r.RecipeId)
@@ -123,7 +128,7 @@ namespace eYummy.Controllers
                 ResultRecipes = new HashSet<Recipe>(ResultRecipes).ToList();
                 //ResultRecipes = ResultRecipes.Distinct().ToList();
 
-                return View("../Recipe/Display", new RecipesListViewModel
+                return View("../Recipe/Display", new SearchRecipeModel
                 {
                     RecipeCollection = ResultRecipes
                     .OrderBy(r => r.RecipeId),
