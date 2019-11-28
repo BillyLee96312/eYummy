@@ -82,7 +82,7 @@ namespace eYummy.Controllers
                     
 
                     filename = this.ihostingEnvironment.WebRootPath + url + fileName;
-                    var urlfilename = this.ihostingEnvironment.WebRootPath + "/assets/img/RecipeList/" + fileName;
+                    var urlfilename = this.ihostingEnvironment.WebRootPath + url + fileName;
                     Console.WriteLine("\n fileName : " + fileName);
                     Console.WriteLine("\n urlfilename : " + urlfilename);
                     size += file.Length;
