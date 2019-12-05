@@ -8,5 +8,8 @@ namespace eYummy.Models.ReviewCommentModels
     public interface IReviewCommentDetailRepository
     {
         IQueryable<ReviewCommentDetail> ReviewCommentDetails { get; }
+        void AddReviewCommentDetail(ReviewCommentDetail reviewCommentDetail);
+        void DeleteReviewCommentDetail(ReviewCommentDetail reviewCommentDetail);
+
     }
 }

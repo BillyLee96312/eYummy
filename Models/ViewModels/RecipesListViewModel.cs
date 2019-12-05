@@ -6,34 +6,57 @@ using eYummy.Models;
 using eYummy.Models.CategoryModels;
 using eYummy.Models.IngredientModels;
 using eYummy.Models.ModalModels;
+using eYummy.Models.ReviewCommentModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace eYummy.Models.ViewModels
 {
     public class RecipesListViewModel
     {
-        public IEnumerable<Recipe> RecipeCollection { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
-        //public Recipe Recipe { get; set; } = new Recipe();
-        //public PagingInfo PagingInfo { get; set; }
-        //public string PageAction { get; set; }
-        //public string SearchRecipe { get; set; }
-        //public string SearchDate { get; set; }
-        //public string SearchCategory { get; set; }
+        public Recipe Recipe { get; set; } = new Recipe();
 
-        /**
+        [BindProperty]
+        public List<IngredientDetail> SaveIngredientDetails { get; set; }
+
+        public IngredientDetail IngredientDetail { get; set; } =
+                new IngredientDetail();
+
+        public IEnumerable<string> IngredientId { get; set; }
+        public IEnumerable<string> IngredientString { get; set; }
+        
+        public List<string> UpdateIngredientString { get; set; }
+        
         public IEnumerable<Recipe> Recipes { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<RecipeModal> RecipeModals { get; set; }
+        public IEnumerable<ModalDetail> ModalDetails { get; set; }
+        public IEnumerable<RecipeIngredient> RecipeIngredients { get; set; }
+        public IEnumerable<IngredientDetail> IngredientDetails { get; set; }
+        public IEnumerable<IngredientDetail> UpdateIngredientDetails { get; set; }
+        public IEnumerable<RecipeReviewComment> RecipeReviewComments { get; set; }
+        public IEnumerable<ReviewCommentDetail> ReviewCommentDetails { get; set; }
 
-        public IEnumerable<Modal> Modals { get; set; }
+        public List<RecipeIngredient> AllRecipeIngredients { get; set; }
+            =   new List<RecipeIngredient>();
+        //OneRecipeIngredients dictionary collection class is 
+        //to Adding key-value pair in dictionary as RecipeIngredients with Ingredients Id
+        public IDictionary<int, string> UpdateIngredientDetailDic { get; set; }
 
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public List<IngredientDetail> AllIngredientDetail {get; set;}
+            =   new List<IngredientDetail>();
+        public List<IngredientDetail> UpdateIngredientDetail { get; set; }
+            =   new List<IngredientDetail>();
 
-        public PagingInfo PagingInfo
+        public List<IngredientDetail> TempUpdateIngredientDetail { get; set; }
+            = new List<IngredientDetail>();
+
+        public static T First<T>(IEnumerable<T> items)
         {
-            get; set;
+            using (IEnumerator<T> iter = items.GetEnumerator())
+            {
+                iter.MoveNext();
+                return iter.Current;
+            }
         }
-        public string CurrentCategory { get; set; }
-        */
-
     }
 }

@@ -1,4 +1,4 @@
-﻿@model eYummy.Models.ViewModels.RecipesListViewModel
+﻿@model eYummy.Models.ViewModels.SearchRecipeModel
 
 
 @{
@@ -121,7 +121,7 @@
                                     <span class="badge badge-primary">@reci.RecipeTitle</span>
                                     
                                     <!-- <a href="/Recipes/UserDetail" class="badge badge-neutral text-right"> Detail </a> -->
-                                    <a asp-action="UserDetail" asp-route-id="@reci.RecipeId" class="badge badge-neutral text-right"> Detail</a>
+                                    <a asp-action="UserDetail" asp-route-id="@reci.RecipeId"  asp-controller="Recipe"  class="badge badge-neutral text-right"> Detail</a>
                                     <br />
                                     <br />
                                     <br />
@@ -132,11 +132,7 @@
                                 }
 
 
-                                @foreach(Category category in Model.Categories)
-                                {
-                                    @category.CategoryId
-                                    @category.CategoryName
-                                }
+
                                 <!--
                                     
                                 
@@ -187,7 +183,7 @@
                                     <br />
                                     <br />
                                 </div>
-                            -->foreach
+                            -->
 
                             </div>
                         </div>

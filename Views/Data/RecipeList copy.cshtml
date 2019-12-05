@@ -1,0 +1,113 @@
+﻿@model eYummy.Models.ViewModels.RecipesListViewModel
+
+
+
+<div class="wrapper">
+
+    <div class="page-header clear-filter page-header-small" filter-color="orange">
+        <div class="page-header-image" data-parallax="true" style="background-image:url('../assets/img/bg5.jpg');">
+        </div>
+        <div class="container">
+            <div class="photo-container">
+                <img src="../../assets/img/now-logo.png" alt="">
+            </div>
+            <h3 class="title">NEUAVENUE BEAUTIFUL RECIPE</h3>
+            <p class="category">Recipe List</p>
+            <div class="content">
+
+                <div class="social-description">
+                    <h2>26</h2>
+                    <p>Kid-Friendly Recipes</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="button-container">
+                <a href="#button" class="btn btn-primary btn-round btn-lg">Follow</a>
+                <a href="#button" class="btn btn-default btn-round btn-lg btn-icon" rel="tooltip" title="Follow me on Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#button" class="btn btn-default btn-round btn-lg btn-icon" rel="tooltip" title="Follow me on Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <h3 class="title">Recipe List</h3>
+            <h5 class="description">
+                Kid-Friendly Recipes are inspiration and ideas for kids with Kids's Chicken,
+                Pork, Pasta, Beef, Pizza, Vegetable and Fish. We have seasonal food recipes and various ingredient. Furthermore, there are lots of special collections : All recipe Magazine Recipes and Food Wishes with Chef John.
+            </h5>
+
+            <!-- Table -->
+
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th class="text-center">Recipe ID </th>
+                        <th>RecipeName</th>
+                        <th>Category</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Recipe reci in Model.Recipes)
+                    {
+                        @foreach (RecipeModal recipeModal in Model.RecipeModals)
+                        {
+                            @if (reci.RecipeId == recipeModal.RecipeId)
+                            {
+                                @reci.RecipeId
+                                <br>
+                                @recipeModal.RecipeId
+                                <br>
+                                @foreach(ModalDetail modalDetail in Model.ModalDetails)
+                                {
+                                    if(recipeModal.ModalId == modalDetail.ModalId)
+                                    {
+                                        @modalDetail.DataTarget
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+
+
+
+                </tbody>
+            </table>
+
+
+            <!-- End table-->
+            <!-- Pagination -->
+            
+
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active">
+                        <span class="page-link">
+                            2
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- End of Pagination -->
+
+        </div>
+    </div>
+</div>

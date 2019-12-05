@@ -8,9 +8,9 @@ namespace eYummy.Models
     public interface IRecipeRepository
     {
         IQueryable<Recipe> Recipes { get; }
-
         void AddRecipe(Recipe recipe);
-
+        void DeleteRecipe(Recipe recipe);
+        void UpdateRecipe(Recipe recipe);
         //Display recipe by recipeId from UserDetail.chstml
         //void RecipesByRecipeId(Recipe recipe);
     }

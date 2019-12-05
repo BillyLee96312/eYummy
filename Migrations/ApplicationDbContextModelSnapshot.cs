@@ -138,9 +138,13 @@ namespace eYummy.Migrations
                     b.Property<int>("ReviewCommentId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AnonymousId");
+
                     b.Property<int>("Rate");
 
                     b.Property<string>("ReviewComment");
+
+                    b.Property<DateTime>("ReviewDateTime");
 
                     b.HasKey("ReviewCommentId");
 

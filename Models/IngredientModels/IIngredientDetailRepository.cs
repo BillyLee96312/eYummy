@@ -9,5 +9,13 @@ namespace eYummy.Models.IngredientModels
     {
         IQueryable<IngredientDetail> IngredientDetails { get; }
         void AddIngredientDetail(IngredientDetail ingredientDetail);
+        void UpdateIngredientDetail(IngredientDetail ingredientDetail);
+        void DeleteIngredientDetail(IngredientDetail ingredientDetail);
+
+
+
+        //void AddIngredientString(IEnumerable<string> IngredientString);
+
+        //void AddIngredientDetail(List<IngredientDetail> ingredientDetails);
     }
 }

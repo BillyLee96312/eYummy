@@ -8,5 +8,8 @@ namespace eYummy.Models.IngredientModels
     public interface IRecipeIngredientRepository
     {
         IQueryable<RecipeIngredient> RecipeIngredients { get; }
+        void AddRecipeIngredient(int recipeId, IngredientDetail ingredientDetail);
+        void DeleteRecipeIngredient(RecipeIngredient recipeIngredient);
+
     }
 }

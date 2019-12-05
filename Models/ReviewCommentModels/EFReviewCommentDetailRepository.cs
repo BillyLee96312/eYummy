@@ -13,5 +13,16 @@ namespace eYummy.Models.ReviewCommentModels
             context = ctx;
         }
         public IQueryable<ReviewCommentDetail> ReviewCommentDetails => context.ReviewCommentDetails;
+
+        public void AddReviewCommentDetail(ReviewCommentDetail reviewCommentDetail)
+        {
+            context.ReviewCommentDetails.Add(reviewCommentDetail);
+            context.SaveChanges();
+        }
+        public void DeleteReviewCommentDetail(ReviewCommentDetail reviewCommentDetail)
+        {
+            context.ReviewCommentDetails.Remove(reviewCommentDetail);
+            context.SaveChanges();
+        }
     }
 }

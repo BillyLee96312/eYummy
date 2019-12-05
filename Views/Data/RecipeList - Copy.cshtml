@@ -1,12 +1,4 @@
-﻿@model IEnumerable<Recipe>
-@using RecipeApp.Models.ModalModels;
-
-
-@{
-    Layout = "_BasicLayout";
-
-    List<Modal> listModals = TempData["Modals"] as List<Modal>;
-}
+﻿@model eYummy.Models.ViewModels.RecipesListViewModel
 
 
 
@@ -51,19 +43,19 @@
 
             <!-- Table -->
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            
-                            <th class="text-center">Recipe ID </th>
-                            <th>RecipeName</th>
-                            <th>Category</th>
-                            <th class="text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (Recipe reci in Model)
-                        {
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th class="text-center">Recipe ID </th>
+                        <th>RecipeName</th>
+                        <th>Category</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Recipe reci in Model.Recipes)
+                    {
                         <tr>
 
                             <td class="text-center">@reci.RecipeId</td>
@@ -71,11 +63,11 @@
                             <td>
 
 
-                                @foreach (var list in ViewBag.data)
+                                @foreach (Category category in Model.Categories)
                                 {
-                                    @if (reci.Category == list.Category_ID)
+                                    @if (reci.CategoryId == category.CategoryId)
                                     {
-                                        @list.Category_Name
+                                        @category.CategoryName
 
                                     }
 
@@ -88,306 +80,320 @@
 
                             <td class="td-actions text-right">
 
-                                <!-- <a href="/Data/Edit/@reci.RecipeId" class="btn btn-info" role="button">-->
-                                <a href="#" class="btn btn-info" role="button">
-                                    Edit
-                                </a>
 
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                        data-target="@reci.DataTarget">
-                                    View
-                                </button>
-                                
-
-                                @foreach (var listModal in listModals)
+                                @foreach (RecipeModal recipeModal in Model.RecipeModals)
                                 {
-                                    @if (reci.RecipeId == listModal.RecipeId)
+                                    @if (reci.RecipeId == recipeModal.RecipeId)
                                     {
-                                        @listModal.RecipeId
-                                        @listModal.ModalId
-                                        @listModal.DataTarget
+
+                                        @if (recipeModal.ModalId == 1)
+                                        {
+
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                    data-target="@recipeModal.ModalDetail.DataTarget">
+                                                Edit
+                                            </button>
+                                        }
+                                        else if (recipeModal.ModalId == 3)
+                                        {
+
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                                    data-target="@recipeModal.ModalDetail.DataTarget">
+                                                View
+                                            </button>
+
+                                            <!-- Modal of User page (Ratings/Comments/Editing/Reviews) -->
+
+
+                                            <div class="modal fade" id="@recipeModal.ModalDetail.ModalName" tabindex="-1"
+                                                 role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+
+
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="viewModalLabel">RECIPE USER</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+
+                                                        </div>
+
+
+                                                        <!--Modal Body-->
+
+                                                        <div class="modal-body">
+
+                                                            <hr>
+
+
+
+                                                            <div class="form-group row text-left">
+                                                                <label for="rating" class="col-sm-2 col-form-label">ID</label>
+                                                                <div class="col-sm-10">
+
+                                                                    @reci.RecipeId
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <label for="rating" class="col-sm-2 col-form-label">Name</label>
+                                                                <div class="col-sm-10">
+                                                                    @reci.RecipeTitle
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Recipe Image -->
+
+                                                            <div class="form-group row text-left">
+                                                                <label for="rating" class="col-sm-2 col-form-label">Images</label>
+                                                                <div class="col-sm-10">
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row text-left">
+                                                                <label for="rating" class="col-sm-2 col-form-label">Descri-ption</label>
+                                                                <div class="col-sm-10">
+                                                                    @reci.Description
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <label for="comment" class="col-sm-2 col-form-label">Ingre-dients</label>
+                                                                <div class="col-sm-10">
+                                                                    <!-- PUt in data-->
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <label for="access" class="col-sm-2 col-form-label">Directions</label>
+                                                                <div class="col-sm-10">
+                                                                    @reci.Description
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row text-left">
+                                                                <label for="editing" class="col-sm-2 col-form-label"><h8>Nutrition Facts</h8></label>
+                                                                <div class="col-sm-10">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div id="inputs">
+                                                                <h5 class="text-left">Recipe Times</h5>
+                                                                <hr />
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Prep:
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.Prep mins
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Servings:
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.Servings mins
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Cook:
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.CookTime mins
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Servings(M):
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.ServingsMax mins
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Total :
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.Total mins
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+
+                                                                            <div class="input-group-append">
+                                                                                Yield :
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6 col-lg-3">
+                                                                        <div class="input-group">
+                                                                            @reci.Yield nuggets
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+
+
+                                                        <!-- End of Modal Body-->
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                        }
+                                        else if (recipeModal.ModalId == 2)
+                                        {
+                                            <!-- End of Modal -->
+                                            <!-- Button Delete trigger modal -->
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" 
+                                                    data-target="@recipeModal.ModalDetail.DataTarget">
+                                                Delete
+                                            </button>
+
+
+
+
+
+                                            <!-- Modal of User page (Ratings/Comments/Editing/Reviews) -->
+                                            <div class="modal fade" id="@recipeModal.ModalDetail.ModalName" tabindex="-1"
+                                                 role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel">RECIPE DELETE</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+
+                                                        </div>
+
+
+                                                        <!--Modal Body-->
+
+                                                        <div class="modal-body">
+
+                                                            <hr>
+                                                            <p class="text-left">Recipe ID : @reci.RecipeId </p>
+
+                                                            <div class="alert alert-danger text-left" role="alert">
+                                                                This is a danger delete alert with
+                                                                <a href="#" class="alert-link">Recipe ID : @reci.RecipeId / Recipe Name :  @reci.RecipeTitle Baked Chicken Nuggets </a>.
+                                                                <br />
+                                                                Click the delete button below if you would like to delete.
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <!-- End of Modal Body-->
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-secondary">Delete</button>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal -->
+
+                                        }
 
                                     }
 
+
                                 }
-                                <!-- Modal of User page (Ratings/Comments/Editing/Reviews) -->
-                                <div class="modal fade" id="@reci.ModalId" tabindex="-1"
-                                     role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
 
-
-
-
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="viewModalLabel">RECIPE USER</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-
-                                            </div>
-
-
-                                            <!--Modal Body-->
-
-                                            <div class="modal-body">
-
-                                                <hr>
-
-
-
-                                                <div class="form-group row text-left">
-                                                    <label for="rating" class="col-sm-2 col-form-label">ID</label>
-                                                    <div class="col-sm-10">
-
-                                                        @reci.RecipeId
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <label for="rating" class="col-sm-2 col-form-label">Name</label>
-                                                    <div class="col-sm-10">
-                                                        @reci.RecipeTitle
-                                                    </div>
-                                                </div>
-
-                                                <!-- Recipe Image -->
-
-                                                <div class="form-group row text-left">
-                                                    <label for="rating" class="col-sm-2 col-form-label">Images</label>
-                                                    <div class="col-sm-10">
-                                                        <img src="~/assets/img/RecipeLIst/@reci.FileToUpload.FileName"
-                                                             alt="@reci.FileToUpload.FileName" class="rounded img-raised">
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row text-left">
-                                                    <label for="rating" class="col-sm-2 col-form-label">Descri-ption</label>
-                                                    <div class="col-sm-10">
-                                                        @reci.Description
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <label for="comment" class="col-sm-2 col-form-label">Ingre-dients</label>
-                                                    <div class="col-sm-10">
-                                                        @reci.Ingredients
-
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <label for="access" class="col-sm-2 col-form-label">Directions</label>
-                                                    <div class="col-sm-10">
-                                                        @reci.Description
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row text-left">
-                                                    <label for="editing" class="col-sm-2 col-form-label"><h8>Nutrition Facts</h8></label>
-                                                    <div class="col-sm-10">
-                                                        @reci.NutritionFacts
-                                                    </div>
-                                                </div>
-                                                <div id="inputs">
-                                                    <h5 class="text-left">Recipe Times</h5>
-                                                    <hr />
-                                                    <div class="row">
-
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Prep:
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.Prep mins
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Servings:
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.Servings mins
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Cook:
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.CookTime mins
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Servings(M):
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.ServingsMax mins
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Total :
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.Total mins
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-
-                                                                <div class="input-group-append">
-                                                                    Yield :
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-lg-3">
-                                                            <div class="input-group">
-                                                                @reci.Yield nuggets
-                                                            </div>
-                                                        </div>
-
-
-
-
-                                                    </div>
-                                                </div>
-
-
-
-                                            </div>
-
-
-                                            <!-- End of Modal Body-->
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-
-
-
-
-                                </div>
-
-                                <!-- End of Modal -->
-                                <!-- Button Delete trigger modal -->
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                                    Delete
-                                </button>
-
-
-
-
-
-                                <!-- Modal of User page (Ratings/Comments/Editing/Reviews) -->
-                                <div class="modal fade" id="deleteModal" tabindex="-1"
-                                     role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel">RECIPE DELETE</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-
-                                            </div>
-
-
-                                            <!--Modal Body-->
-
-                                            <div class="modal-body">
-
-                                                <hr>
-                                                <p class="text-left">Recipe ID : @reci.RecipeId </p>
-
-                                                <div class="alert alert-danger text-left" role="alert">
-                                                    This is a danger delete alert with
-                                                    <a href="#" class="alert-link">Recipe ID : @reci.RecipeId / Recipe Name :  @reci.RecipeTitle Baked Chicken Nuggets </a>.
-                                                    <br />
-                                                    Click the delete button below if you would like to delete.
-                                                </div>
-
-                                            </div>
-
-
-                                            <!-- End of Modal Body-->
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-secondary">Delete</button>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of Modal -->
 
 
                             </td>
                         </tr>
-                        }
+                    }
 
 
 
 
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
 
-                <!-- End table-->
-                <!-- Pagination -->
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <span class="page-link">Previous</span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active">
-                            <span class="page-link">
-                                2
-                                <span class="sr-only">(current)</span>
-                            </span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+            <!-- End table-->
+            <!-- Pagination -->
+            
 
-                <!-- End of Pagination -->
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active">
+                        <span class="page-link">
+                            2
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- End of Pagination -->
 
         </div>
     </div>

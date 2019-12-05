@@ -47,8 +47,8 @@
             <form asp-controller="Data" asp-action="Insert" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All"></div>
                 <!--
-                <input type="hidden" asp-for="ModalId" />
-                -->
+    <input type="hidden" asp-for="ModalId" />
+    -->
 
                 <div class="card-header text-center">
                     <div class="logo-container">
@@ -57,18 +57,18 @@
                 </div>
                 <br>
                 <!--
-                <div class="form-group row">
-                    <label for="RecipeId" class="col-sm-2 col-form-label">Recipe ID</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control-plaintext" asp-for="Recipe.RecipeId" />
-                    </div>
-                </div>
-                -->
+    <div class="form-group row">
+        <label for="RecipeId" class="col-sm-2 col-form-label">Recipe ID</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control-plaintext" asp-for="Recipe.RecipeId" />
+        </div>
+    </div>
+    -->
                 <div class="form-group row">
                     <label for="RecipeTitle" class="col-sm-2 col-form-label">Recipe Title</label>
                     <div class="col-sm-10">
                         <!-- <input type="text" class="form-control-plaintext" id="recipetitle" />-->
-                        <input type="text" class="form-control-plaintext" asp-for="Recipe.RecipeTitle" />
+                        <input type="text" class="form-control-plaintext" asp-for="@Model.Recipe.RecipeTitle" />
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
                     <div class="col-sm-10">
 
                         <select class="form-control" data-style="select-with-transition btn-primary btn-round"
-                                title="Category" asp-for="Recipe.CategoryId" data-size="8">
+                                title="Category" asp-for="@Model.Recipe.CategoryId" data-size="8">
 
                             @foreach (Category category in Model.AllCategories)
                             {
@@ -94,97 +94,109 @@
                     <label for="Description" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
                         <!-- <textarea class="form-control" id="Description" rows="4"></textarea>-->
-                        <textarea class="form-control" asp-for="Recipe.Description" rows="4"></textarea>
+                        <textarea class="form-control" asp-for="@Model.Recipe.Description" rows="4"></textarea>
                     </div>
                 </div>
-                
+
                 <div class="form-group row">
                     <label for="Ingredients" class="col-sm-2 col-form-label">Ingredients</label>
                     <div class="col-sm-10">
+                        <!--
+            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+            -->
 
-                        <textarea class="form-control" asp-for="IngredientDetail.IngredientString" rows="1"></textarea>
-                        <textarea class="form-control" asp-for="IngredientDetail.IngredientString" rows="1"></textarea>
-                        <textarea class="form-control" asp-for="IngredientDetail.IngredientString" rows="1"></textarea>
-                        <textarea class="form-control" asp-for="IngredientDetail.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
 
-                        <input id="btnAdd" type="button" value="Ingredients Add" onclick="AddTextBox()" />
-                        <br />
-                        <br />
-                        <div id="TextBoxContainer">
+                        <!--
+            <input id="btnAdd" type="button" value="Ingredients Add" onclick="AddTextBox()" />
+            <br />
+            <br />
+            <div id="TextBoxContainer">
 
-                        </div>
-                        <br />
-
+            </div>
+            <br />
+            -->
 
                     </div>
                 </div>
 
                 <hr />
                 <!--
-                <div class="form-group row">
-                    <label for="Directions" class="col-sm-2 col-form-label">Directions</label>
-                    <div class="col-sm-10">
-                        
-                       <textarea class="form-control" asp-for="Directions_ID" rows="4"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="NutritionFacts" class="col-sm-2 col-form-label">Nutrition Facts</label>
-                    <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="NutritionFacts" rows="4"></textarea>
-                    </div>
-                </div>
-                -->
+    <div class="form-group row">
+        <label for="Directions" class="col-sm-2 col-form-label">Directions</label>
+        <div class="col-sm-10">
+
+           <textarea class="form-control" asp-for="Directions_ID" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="NutritionFacts" class="col-sm-2 col-form-label">Nutrition Facts</label>
+        <div class="col-sm-10">
+
+            <textarea class="form-control" asp-for="NutritionFacts" rows="4"></textarea>
+        </div>
+    </div>
+    -->
 
                 <hidden asp-for="DataTarget"></hidden>
                 <hr />
                 <span>DIRECTIONS TIMES(DETAILS)</span>
                 <br />
                 <br />
-    
+
                 <div class="form-group row">
                     <label for="Prep" class="col-sm-2 col-form-label">Prep</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.Prep" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.Prep" rows="1"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="Servings" class="col-sm-2 col-form-label">Servings</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.Servings" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.Servings" rows="1"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="CookTime" class="col-sm-2 col-form-label">Cook Time</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.CookTime" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.CookTime" rows="1"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="ServingsMax" class="col-sm-2 col-form-label">Servings(Max)</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.ServingsMax" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.ServingsMax" rows="1"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Yield" class="col-sm-2 col-form-label">Yield</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.Yield" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.Yield" rows="1"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Total" class="col-sm-2 col-form-label">Total</label>
                     <div class="col-sm-10">
-                        
-                        <textarea class="form-control" asp-for="Recipe.Total" rows="1"></textarea>
+
+                        <textarea class="form-control" asp-for="@Model.Recipe.Total" rows="1"></textarea>
                     </div>
                 </div>
 
@@ -200,24 +212,37 @@
 
 
                 <!-- Jasny Bootstrap : https://www.jasny.net/bootstrap/components/ -->
-
+                <!--
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <span class="btn btn-outline-secondary btn-file">
                         <span class="fileinput-new">Select file</span>
                         <span class="fileinput-exists">Change</span>
-                        <!--<input type="file" name="RecipeImage" multiple>-->
-                        <input type="file" id="FileToUpload" name="FileToUpload" 
-                                asp-for="Recipe.FileToUpload" multiple 
-                                    accept="wwwroot/assets/imag/RecipeList/*">
+                        
+                        <input type="file" id="FileToUpload" name="FileToUpload"
+                               asp-for="@*Model.Recipe.FileToUpload*@" multiple
+                               accept="wwwroot/assets/imag/RecipeList/*">
 
                     </span>
                     <span class="fileinput-filename"></span>
                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
                 </div>
+                -->
 
-
-
-
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                        <img class="d-block" src="@Model.Recipe.FileToUpload" />
+                    </div>
+                    <div>
+                        <span class="btn btn-outline-secondary btn-file">
+                            <span class="fileinput-new">Select image</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file" id="FileToUpload" name="FileToUpload"
+                                    asp-for="@Model.Recipe.FileToUpload" multiple
+                                    accept="wwwroot/assets/imag/RecipeList/*" />
+                        </span>
+                        <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
+                </div>
 
                 <div class="card-footer text-center">
                     <!--<a href="#pablo" class="btn btn-primary btn-round btn-lg btn-block">Save</a>-->
@@ -240,17 +265,22 @@
 
 </div>
 
+
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
         function GetDynamicTextBox(value) {
             var div = $("<div />");
-            
+
+            /*
             var textBox = $("<textarea />").attr("class", "form-control")
-                .attr("row", "1").attr("name", "Ingredients_title").attr("id", "Ingredients_title")
+                .attr("rows", "1").attr("name", "Ingredients_title").attr("id", "Ingredients_title")
                 .attr("data-val", "true").attr("data-val-required","Please describes about the Ingredient of your recipe which is required");
+            */
+            var textBox = $("<textarea />").attr("class", "form-control").attr("asp-for", "IngredientString").attr("rows", "1");
             textBox.val(value);
             div.append(textBox);
-            
+
             //var texthiddenBox = $("<input />").attr("type", "hidden").attr("value", "Remove")
             //    .attr("class", "form-control").attr("id", "Ingredients_ID").attr("name", "Ingredients_ID")
             //    ;
@@ -267,7 +297,9 @@
         }
         function AddTextBox() {
             var div = GetDynamicTextBox("");
+
             $("#TextBoxContainer").append(div);
+            
         }
 
         function RemoveTextBox(button) {
@@ -292,3 +324,6 @@
             });
     </script>
 }
+
+
+

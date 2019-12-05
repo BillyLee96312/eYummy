@@ -8,5 +8,6 @@ namespace eYummy.Models.ModalModels
     public interface IModalDetailRepository
     {
         IQueryable<ModalDetail> ModalDetails { get; }
+        //void AddModalDetails(ModalDetail modalDetail);
     }
 }

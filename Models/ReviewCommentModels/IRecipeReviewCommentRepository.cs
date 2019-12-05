@@ -8,5 +8,7 @@ namespace eYummy.Models.ReviewCommentModels
     public interface IRecipeReviewCommentRepository
     {
         IQueryable<RecipeReviewComment> RecipeReviewComments { get; }
+        void AddRecipeReviewComment(int recipeId, ReviewCommentDetail reviewComentDetail);
+        void DeleteRecipeReviewComment(RecipeReviewComment recipeReviewComment);
     }
 }

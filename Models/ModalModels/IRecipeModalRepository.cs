@@ -8,5 +8,7 @@ namespace eYummy.Models.ModalModels
     public interface IRecipeModalRepository
     {
         IQueryable<RecipeModal> RecipeModals { get; }
+        void AllRecipeModal(int recipeId, ModalDetail modelDetail);
+        void DeleteRecipeModal(RecipeModal recipeModal);
     }
 }

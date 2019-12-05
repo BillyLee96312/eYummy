@@ -26,9 +26,15 @@ namespace eYummy.Controllers
 
         private UserDetailModel userDetailModel;
         private SearchRecipeModel searchRecipeModel;
+        private RecipeReviewCommentModel recipeReviewCommentModel;
 
+        IReviewCommentDetailRepository iReviewCommentDetailRepository;
+        IRecipeReviewCommentRepository iRecipeReviewCommentRepository;
+
+        IRecipeRepository recipeRepository;
 
         public RecipeController(IRecipeRepository recipeRepository, 
+                                ICategoryRepository categoryRepository,
                                 IIngredientDetailRepository ingredientDetailRepository,
                                 IRecipeIngredientRepository recipeIngredientRepository,
                                 IReviewCommentDetailRepository  reviewCommentDetailRepository,
@@ -40,14 +46,19 @@ namespace eYummy.Controllers
             RecipeIngredients       =   recipeIngredientRepository.RecipeIngredients;
             ReviewCommentDetails    =   reviewCommentDetailRepository.ReviewCommentDetails;
             RecipeReviewComments    =   recipeReviewCommentRepository.RecipeReviewComments;
+            Categories              =   categoryRepository.Categories;
+
+            iRecipeReviewCommentRepository  = recipeReviewCommentRepository;
+            iReviewCommentDetailRepository  = reviewCommentDetailRepository;
+
 
         }
+
         public IActionResult Index()
         {
             return View();
         }
         
-
 
         public ViewResult Display()
         {
@@ -62,18 +73,17 @@ namespace eYummy.Controllers
         {
             Console.WriteLine("\n UserDetail .............. " + id);
             
-            userDetailModel = new UserDetailModel();
-            userDetailModel.AllRecipes = Recipes.ToList<Recipe>();
-            userDetailModel.AllIngredientDetails = IngredientDetails.ToList<IngredientDetail>();
-            userDetailModel.AllRecipeIngredients = RecipeIngredients.ToList<RecipeIngredient>();
-            userDetailModel.AllReviewCommentDetails = ReviewCommentDetails.ToList<ReviewCommentDetail>();
-            userDetailModel.AllRecipeReviewComments = RecipeReviewComments.ToList<RecipeReviewComment>();
-
-            userDetailModel.Recipe              = Recipes.FirstOrDefault(r => r.RecipeId.ToString() == id);
+            userDetailModel                             = new UserDetailModel();
+            userDetailModel.AllRecipes                  = Recipes.ToList<Recipe>();
+            userDetailModel.AllIngredientDetails        = IngredientDetails.ToList<IngredientDetail>();
+            userDetailModel.AllRecipeIngredients        = RecipeIngredients.ToList<RecipeIngredient>();
+            userDetailModel.AllReviewCommentDetails     = ReviewCommentDetails.ToList<ReviewCommentDetail>();
+            userDetailModel.AllRecipeReviewComments     = RecipeReviewComments.ToList<RecipeReviewComment>();
+            userDetailModel.Recipe                      = Recipes.FirstOrDefault(r => r.RecipeId.ToString() == id);
+            userDetailModel.cntRecipeReviewComments     = RecipeReviewComments.ToList<RecipeReviewComment>().Where(rc => rc.RecipeId.ToString() == id).Count();
 
             return View(userDetailModel);
         }
-
 
 
         public ViewResult FindRecipe(string searchCategoryName, string searchString)
@@ -140,5 +150,65 @@ namespace eYummy.Controllers
             }
 
         }
+
+        [HttpGet]
+        public ViewResult CreateUser(string id)
+        {
+
+            //Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId.ToString() == id);
+            recipeReviewCommentModel = new RecipeReviewCommentModel();
+
+            recipeReviewCommentModel.Recipe = Recipes.FirstOrDefault(r => r.RecipeId.ToString() == id);
+            recipeReviewCommentModel.ReviewCommentDetail.ReviewDateTime = System.DateTime.Now;
+            
+            return View("createUser", recipeReviewCommentModel);
+        }
+
+
+        [HttpPost]
+        public ViewResult AddRecipeRivewComment(RecipeReviewCommentModel recipeReviewCommentModel)
+        {
+            /**
+            Console.WriteLine("recipeReviewCommentModel.Recipe.RecipeId = " + recipeReviewCommentModel.Recipe.RecipeId);
+            Console.WriteLine("recipeReviewCommentModel.ReviewCommentDetail.Rate = " + recipeReviewCommentModel.ReviewCommentDetail.Rate);
+            Console.WriteLine("recipeReviewCommentModel.ReviewCommentDetail.RecipeReviewComments = " + recipeReviewCommentModel.ReviewCommentDetail.RecipeReviewComments);
+            Console.WriteLine("recipeReviewCommentModel.ReviewCommentDetail.ReviewComment = " + recipeReviewCommentModel.ReviewCommentDetail.ReviewComment);
+            Console.WriteLine("recipeReviewCommentModel.ReviewCommentDetail.ReviewCommentId = " + recipeReviewCommentModel.ReviewCommentDetail.ReviewCommentId);
+            Console.WriteLine("recipeReviewCommentModel.ReviewCommentDetail.ReviewDateTime = " + recipeReviewCommentModel.ReviewCommentDetail.ReviewDateTime);
+            */
+
+
+            if (ModelState.IsValid)
+            {
+
+                iReviewCommentDetailRepository.AddReviewCommentDetail(recipeReviewCommentModel.ReviewCommentDetail);
+
+                iRecipeReviewCommentRepository.AddRecipeReviewComment(
+                        recipeReviewCommentModel.Recipe.RecipeId, recipeReviewCommentModel.ReviewCommentDetail);
+
+                
+                // this userDetailModel is to display for the percific UserDetail by recipeId that the user has been created before
+
+                userDetailModel = new UserDetailModel();
+                userDetailModel.AllRecipes = Recipes.ToList<Recipe>();
+                userDetailModel.AllIngredientDetails = IngredientDetails.ToList<IngredientDetail>();
+                userDetailModel.AllRecipeIngredients = RecipeIngredients.ToList<RecipeIngredient>();
+                userDetailModel.AllReviewCommentDetails = ReviewCommentDetails.ToList<ReviewCommentDetail>();
+                userDetailModel.AllRecipeReviewComments = RecipeReviewComments.ToList<RecipeReviewComment>();
+                userDetailModel.Recipe = Recipes.FirstOrDefault(r => r.RecipeId.ToString() == recipeReviewCommentModel.Recipe.RecipeId.ToString());
+                userDetailModel.cntRecipeReviewComments = RecipeReviewComments.ToList<RecipeReviewComment>().Where(rc => rc.RecipeId.ToString() ==
+                            recipeReviewCommentModel.Recipe.RecipeId.ToString()).Count();
+
+                return View("UserDetail", userDetailModel);
+                
+            }
+            else
+            {
+                // there is something wrong with the data values
+                return View("../Home/Index");
+            }
+            
+        }
+
     }
 }

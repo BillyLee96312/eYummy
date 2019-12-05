@@ -29,6 +29,6 @@ namespace eYummy.Models.RecipeModels
 
         public List<RecipeIngredient> AllRecipeIngredients { get; set; } =
                 new List<RecipeIngredient>();
-        
+        public int cntRecipeReviewComments;
     }
 }
