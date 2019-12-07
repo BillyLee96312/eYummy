@@ -102,11 +102,11 @@
                     <label for="Ingredients" class="col-sm-2 col-form-label">Ingredients</label>
                     <div class="col-sm-10">
                         <!--
-            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
-            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
-            <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
-            -->
-
+                        <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+                        <textarea class="form-control" asp-for="IngredientString" rows="1"></textarea>
+                        -->
+                        
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
@@ -117,16 +117,16 @@
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
                         <textarea class="form-control" asp-for="@Model.IngredientString" rows="1"></textarea>
-
+                        
                         <!--
-            <input id="btnAdd" type="button" value="Ingredients Add" onclick="AddTextBox()" />
-            <br />
-            <br />
-            <div id="TextBoxContainer">
+                        <input id="btnAdd" type="button" value="Ingredients Add" onclick="AddTextBox()" />
+                        <br />
+                        <br />
+                        <div id="TextBoxContainer">
 
-            </div>
-            <br />
-            -->
+                        </div>
+                        <br />
+                            -->
 
                     </div>
                 </div>
@@ -217,7 +217,7 @@
                     <span class="btn btn-outline-secondary btn-file">
                         <span class="fileinput-new">Select file</span>
                         <span class="fileinput-exists">Change</span>
-                        
+
                         <input type="file" id="FileToUpload" name="FileToUpload"
                                asp-for="@*Model.Recipe.FileToUpload*@" multiple
                                accept="wwwroot/assets/imag/RecipeList/*">
@@ -228,30 +228,30 @@
                 </div>
                 -->
 
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                        <img class="d-block" src="@Model.Recipe.FileToUpload" />
-                    </div>
-                    <div>
-                        <span class="btn btn-outline-secondary btn-file">
-                            <span class="fileinput-new">Select image</span>
-                            <span class="fileinput-exists">Change</span>
-                            <input type="file" id="FileToUpload" name="FileToUpload"
-                                    asp-for="@Model.Recipe.FileToUpload" multiple
-                                    accept="wwwroot/assets/imag/RecipeList/*" />
-                        </span>
-                        <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
-                    </div>
-                </div>
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                <img class="d-block" src="@Model.Recipe.FileToUpload" />
+                            </div>
+                            <div>
+                                <span class="btn btn-outline-secondary btn-file">
+                                    <span class="fileinput-new">Select image</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" id="FileToUpload" name="FileToUpload"
+                                           asp-for="@Model.Recipe.FileToUpload" multiple
+                                           accept="wwwroot/assets/imag/RecipeList/*" />
+                                </span>
+                                <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                            </div>
+                        </div>
 
-                <div class="card-footer text-center">
-                    <!--<a href="#pablo" class="btn btn-primary btn-round btn-lg btn-block">Save</a>-->
-                    <button class="btn btn-primary btn-round btn-lg btn-block" type="submit">Save</button>
-                    <button class="btn btn-primary btn-round btn-lg btn-block" asp-action="Index">Cancel</button>
-                </div>
-                <br>
+                        <div class="card-footer text-center">
+                            <!--<a href="#pablo" class="btn btn-primary btn-round btn-lg btn-block">Save</a>-->
+                            <button class="btn btn-primary btn-round btn-lg btn-block" type="submit">Save</button>
+                            <button class="btn btn-primary btn-round btn-lg btn-block" asp-action="Index">Cancel</button>
+                        </div>
+                        <br>
 
-            </form>
+</form>
 
 
 
@@ -269,15 +269,17 @@
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
+        let  i = 0;
         function GetDynamicTextBox(value) {
             var div = $("<div />");
-
+            
             /*
             var textBox = $("<textarea />").attr("class", "form-control")
                 .attr("rows", "1").attr("name", "Ingredients_title").attr("id", "Ingredients_title")
                 .attr("data-val", "true").attr("data-val-required","Please describes about the Ingredient of your recipe which is required");
             */
-            var textBox = $("<textarea />").attr("class", "form-control").attr("asp-for", "IngredientString").attr("rows", "1");
+            //var textBox = $("<textarea />").attr("class", "form-control").attr("asp-for", "[" +i + "]" + "IngredientString").attr("rows", "1");
+            var textBox = $("<input />").attr("type", "text").attr("class", "form-control").attr("name", "[" + i + "]" + "IngredientString");
             textBox.val(value);
             div.append(textBox);
 
@@ -292,7 +294,7 @@
             button.attr("onclick", "RemoveTextBox(this)");
             div.append(button);
 
-
+            ++i;
             return div;
         }
         function AddTextBox() {

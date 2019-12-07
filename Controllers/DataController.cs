@@ -74,21 +74,37 @@ namespace eYummy.Controllers
         public ViewResult List(int recipePage = 1)
         {
             
-            rlv.Recipes             =   iRecipeRepo.Recipes;
-            rlv.Categories          =   iCategoryRepo.Categories;
-            rlv.ModalDetails        =   iModalDetailRepo.ModalDetails;
-            rlv.RecipeModals        =   iRecipeModalRepo.RecipeModals;
-            rlv.RecipeIngredients   =   iRecipeIngredientRepo.RecipeIngredients;
-            rlv.IngredientDetails   =   iIngredientDetailRepo.IngredientDetails;
+            rlv.Recipes                 =   iRecipeRepo.Recipes;
+            rlv.Categories              =   iCategoryRepo.Categories;
+            rlv.ModalDetails            =   iModalDetailRepo.ModalDetails;
+            rlv.RecipeModals            =   iRecipeModalRepo.RecipeModals;
+            rlv.RecipeIngredients       =   iRecipeIngredientRepo.RecipeIngredients;
+            rlv.IngredientDetails       =   iIngredientDetailRepo.IngredientDetails;
+            rlv.AllRecipeIngredients    =   iRecipeIngredientRepo.RecipeIngredients.ToList<RecipeIngredient>();
+            rlv.AllIngredientDetail     =   iIngredientDetailRepo.IngredientDetails.ToList<IngredientDetail>();
 
             return View("RecipeList", rlv);
         }
 
-        [HttpPost]
-        
-        public IActionResult EditRecipe(RecipesListViewModel recipesListViewModel, string[] UpdateIngredientString)
+
+        public ViewResult RecipeList()
         {
 
+            rlv.Recipes = iRecipeRepo.Recipes;
+            rlv.Categories = iCategoryRepo.Categories;
+            rlv.ModalDetails = iModalDetailRepo.ModalDetails;
+            rlv.RecipeModals = iRecipeModalRepo.RecipeModals;
+            rlv.RecipeIngredients = iRecipeIngredientRepo.RecipeIngredients;
+            rlv.IngredientDetails = iIngredientDetailRepo.IngredientDetails;
+            rlv.AllRecipeIngredients = iRecipeIngredientRepo.RecipeIngredients.ToList<RecipeIngredient>();
+            rlv.AllIngredientDetail = iIngredientDetailRepo.IngredientDetails.ToList<IngredientDetail>();
+
+            return View("RecipeList", rlv);
+        }
+        [HttpPost]
+        
+        public ActionResult EditRecipe(RecipesListViewModel recipesListViewModel)
+        {
             recipesListViewModel.Recipe.DateTimeUpdate = DateTime.Now;
             Console.WriteLine("recipe IngredientString = " + recipesListViewModel.IngredientString);
 
@@ -107,87 +123,95 @@ namespace eYummy.Controllers
             Console.WriteLine("rlview CookTime = " + recipesListViewModel.Recipe.CookTime);
             Console.WriteLine("rlview Prep = " + recipesListViewModel.Recipe.Prep);
             Console.WriteLine("rlview DateTimeUpdate = " + recipesListViewModel.Recipe.DateTimeUpdate);
-            Console.WriteLine("rlview DateTimeUpdate = " + recipesListViewModel.UpdateIngredientString);
+            //string strName = Request.Form["pair.Value"].ToString();
+            //Console.WriteLine("pair.value = " + strName);
 
-            foreach (IngredientDetail ingredientDetail in recipesListViewModel.UpdateIngredientDetail)
-            {
-                Console.WriteLine(ingredientDetail.IngredientId);
-                Console.WriteLine(ingredientDetail.IngredientString);
-                
-            }
-
-            foreach (KeyValuePair<int, string> item in recipesListViewModel.UpdateIngredientDetailDic)
-            {
-                Console.WriteLine("item key = " + item.Key + ", item Value" + item.Value);
-            }
 
 
             if (ModelState.IsValid)
             {
 
-                if (iRecipeRepo.Recipes.Where(r => r.RecipeId == recipesListViewModel.Recipe.RecipeId).Count() == 0)
+
+                recipesListViewModel.Recipe.FileToUpload = getFileUrlName();
+                Console.WriteLine("rlview FileToUpload = " + recipesListViewModel.Recipe.FileToUpload);
+
+                //Insert new recipe in recipe table
+                iRecipeRepo.UpdateRecipe(recipesListViewModel.Recipe);
+
+
+                /*
+                //get these values (Keys and Values) by Access Elements using for Loop from the dictionary of UpdateRecipeIngredients class
+                foreach (KeyValuePair<int, string> item in updateRecipeIngredients)
                 {
-
-                    recipesListViewModel.Recipe.FileToUpload = getFileUrlName();
-                    Console.WriteLine("rlview FileToUpload = " + recipesListViewModel.Recipe.FileToUpload);
-
-                    //Insert new recipe in recipe table
-                    //iRecipeRepo.UpdateRecipe(recipesListViewModel.Recipe);
-                    //IDictionary<int, string> updateRecipeIngredients = recipesListViewModel.UpdateRecipeIngredients;
-
-                    foreach(var updateIngredientString in recipesListViewModel.UpdateIngredientString)
-                    {
-                        Console.WriteLine("Value: {0} to update IngredientDetail changed by user ", updateIngredientString);
-                    }
-                    /*
-                    //get these values (Keys and Values) by Access Elements using for Loop from the dictionary of UpdateRecipeIngredients class
-                    foreach (KeyValuePair<int, string> item in updateRecipeIngredients)
-                    {
-                        Console.WriteLine("Key: {0}, Value: {1} to update RecipeIngredients", item.Key, item.Value);
-                    }
-                    */
-                    /**
-                    foreach (IngredientDetail ingredientDetail in recipesListViewModel.UpdateIngredientDetails)
-                    {
-                        Console.WriteLine("IngredientId value in EditRecipe() = " + ingredientDetail.IngredientId);
-                        Console.WriteLine("ingredientString value in EditRecipe() = " + ingredientDetail.IngredientString);
-                    }
-                    */
-                    /**
-                    foreach (string ingredientString in recipesListViewModel.IngredientString)
-                    {
-
-                        if (string.IsNullOrEmpty(ingredientString))
-                        {
-                            Console.WriteLine("There is a empty or null in the ingredient detail by the user input (ingredientString is null) in the recipe Id ["
-                                + recipesListViewModel.Recipe.RecipeId + "]");
-                        }
-                        else
-                        {
-
-                            IngredientDetail ingredientDetail = new IngredientDetail();
-
-                            ingredientDetail.IngredientId = ingredientString;
-                            ingredientDetail.IngredientString = ingredientString;
-                            Console.WriteLine("ingredientString value in EditRecipe() = " + ingredientString);
-                            iIngredientDetailRepo.UpdateIngredientDetail(ingredientDetail);
-                            // Insert Ingredients of New Recipe in RecipeIngredient Table as Bridge Table for many to many relations 
-                            // Between Recipe and IngredientDetail Table (Ingredient Informations)
-                            //iRecipeIngredientRepo.UpdaeteRecipeIngredient(
-                            //    recipesListViewModel.Recipe.RecipeId, ingredientDetail);
-
-
-                        }
-                    }
-                    */
-
-
+                    Console.WriteLine("Key: {0}, Value: {1} to update RecipeIngredients", item.Key, item.Value);
                 }
-                    return View("RecipeList", recipesListViewModel);
+                */
+                /**
+                foreach (IngredientDetail ingredientDetail in recipesListViewModel.UpdateIngredientDetails)
+                {
+                    Console.WriteLine("IngredientId value in EditRecipe() = " + ingredientDetail.IngredientId);
+                    Console.WriteLine("ingredientString value in EditRecipe() = " + ingredientDetail.IngredientString);
+                }
+                */
+
+                /**
+                foreach (KeyValuePair<int, string> pair in recipesListViewModel.UpdateIngredientDetailDic)
+                {
+                    Console.WriteLine("FOREACH KEYVALUEPAIR: {0}, {1}", pair.Key, pair.Value);
+                }
+                */
+                
+                foreach (IngredientDetail ingredientDetail in recipesListViewModel.UpdateIngredientDetail)
+                {
+                    Console.WriteLine("ingredientString value of UpdateIngredientDetail in EditRecipe() = " + ingredientDetail.IngredientString);
+                    if (string.IsNullOrEmpty(ingredientDetail.IngredientString))
+                    {
+                        Console.WriteLine("There is a empty or null in the ingredient detail by the user input (ingredientString is null) in the recipe Id ["
+                            + recipesListViewModel.Recipe.RecipeId + "]");
+                    }
+                    else
+                    {
+
+                        IngredientDetail updateingredientDetail = new IngredientDetail();
+
+                        updateingredientDetail.IngredientId = ingredientDetail.IngredientId;
+                        updateingredientDetail.IngredientString = ingredientDetail.IngredientString;
+                        Console.WriteLine("ingredientString value in EditRecipe() = " + updateingredientDetail.IngredientString);
+
+                        iIngredientDetailRepo.UpdateIngredientDetail(updateingredientDetail);
+                        // Insert Ingredients of New Recipe in RecipeIngredient Table as Bridge Table for many to many relations 
+                        // Between Recipe and IngredientDetail Table (Ingredient Informations)
+                        //iRecipeIngredientRepo.UpdaeteRecipeIngredient(
+                        //    recipesListViewModel.Recipe.RecipeId, ingredientDetail);
+
+
+                    }
+                }
+                
+                RecipesListViewModel rlv = new RecipesListViewModel();
+
+                //Every data in database to be fresh after updating in this system.
+                rlv.Recipes = iRecipeRepo.Recipes;
+                rlv.Categories = iCategoryRepo.Categories;
+                rlv.ModalDetails = iModalDetailRepo.ModalDetails;
+                rlv.RecipeModals = iRecipeModalRepo.RecipeModals;
+                rlv.RecipeIngredients = iRecipeIngredientRepo.RecipeIngredients;
+                rlv.IngredientDetails = iIngredientDetailRepo.IngredientDetails;
+                rlv.AllRecipeIngredients = iRecipeIngredientRepo.RecipeIngredients.ToList<RecipeIngredient>();
+                rlv.AllIngredientDetail = iIngredientDetailRepo.IngredientDetails.ToList<IngredientDetail>();
+
+                //Once UpdateIngredientDetail and TempUpdateIngredientDetail did work for updating to database,
+                //These class in RecipesListViewModel has to have initial value as null to show agian he RecipeList by each recipe (recipeId)
+                // as Edit button by the user who want to change his own Recipe Information for the next time or right after editing it. 
+                rlv.UpdateIngredientDetail.Clear();
+                rlv.TempUpdateIngredientDetail.Clear();
+
+                //return View("/Data/List/1", rlv);
+                return RedirectToAction("List", "Data");
             }
             else
             {
-                return View("RecipeList", recipesListViewModel);
+                return View("RecipeList", rlv);
             }
         }
 
