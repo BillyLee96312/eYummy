@@ -13032,11 +13032,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy\\eYummy\\eYummy\\eYummy.csproj",
+      "projectUniqueName": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy - 2019-12-09\\eYummy\\eYummy\\eYummy.csproj",
       "projectName": "eYummy",
-      "projectPath": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy\\eYummy\\eYummy\\eYummy.csproj",
+      "projectPath": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy - 2019-12-09\\eYummy\\eYummy\\eYummy.csproj",
       "packagesPath": "C:\\Users\\BillyLee96312\\.nuget\\packages\\",
-      "outputPath": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy\\eYummy\\eYummy\\obj\\",
+      "outputPath": "D:\\2019 Fall\\Web application Dev. (COMP229)\\eYummy - 2019-12-09\\eYummy\\eYummy\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

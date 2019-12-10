@@ -119,8 +119,7 @@
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
 
-                                                                    <form name="@Model.Recipe.RecipeId" id="@Model.Recipe.RecipeId"
-                                                                          asp-controller="Data" asp-action="EditRecipe" method="post" enctype="multipart/form-data">
+                                                                    <form asp-controller="Data" asp-action="EditRecipe" method="post" enctype="multipart/form-data">
 
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="viewModalLabel">RECIPE EDIT</h5>
@@ -280,17 +279,15 @@
                                                                             </div>
 
                                                                         </div>
-                                                                    </form>
+
                                                                         <!-- End of Modal Body-->
 
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <!--<button type="submit" class="btn btn-secondary">Save</button>-->
-                                                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" onclick="submitForms(@Model.Recipe.RecipeId)" value="Save"/>
-
+                                                                            <button type="submit" class="btn btn-secondary">Save</button>
                                                                         </div>
 
-                                                       
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -641,10 +638,13 @@
 
 <script>
     function submitForms(recipeId) {
-        var formName = recipeId.toString();
-        alert(formName);
+        alert(recipeId);
+        var editModalName = "EditModal";
+        alert(editModalName);
+        var formName = recipeId + "" + editModalName;
+        alert(formName)
+        
         document.forms[formName].submit();
-
     }
 
     
