@@ -9,7 +9,7 @@
             <div class="photo-container">
                 <img src="../../assets/img/now-logo.png" alt="">
             </div>
-            <h3 class="title">NEUAVENUE BEAUTIFUL RECIPE</h3>
+            <h3 class="title">eYummy</h3>
             <p class="category">Recipe List</p>
             <div class="content">
                 <div class="social-description">
@@ -344,12 +344,25 @@
                         <br>
                         <br />
                         <div class="typography-line">
-                            <span>NUTRITION FACTS</span>
+                            <span>RECIPE INFORMATION</span>
                             <blockquote>
                                 <p class="blockquote blockquote-primary">
-                                    Per Serving:
-                                    @Model.Recipe.Servings
+                                    Perparation Time:
+                                    @Model.Recipe.Prep mins
                                     <br>
+                                    Per Serving Time:
+                                    @Model.Recipe.Servings mins
+                                    <br>
+                                    Cook Time:
+                                    @Model.Recipe.CookTime mins
+                                    <br>
+                                    Servings(M):
+                                    @Model.Recipe.ServingsMax mins
+                                    <br>
+                                    Yield :
+                                    @Model.Recipe.Yield mins
+                                    <br>
+
                                     <br>
                                     <small>
                                         - TOTAL : @Model.Recipe.Total
@@ -357,8 +370,6 @@
                                 </p>
                             </blockquote>
                         </div>
-
-
                         <div class="progress-container">
 
                             <div class="progress">
@@ -368,8 +379,6 @@
                             </div>
                         </div>
                         <br>
-
-
 
                     </div>
                 </div>

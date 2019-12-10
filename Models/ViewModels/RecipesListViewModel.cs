@@ -14,7 +14,7 @@ namespace eYummy.Models.ViewModels
     public class RecipesListViewModel
     {
         public Recipe Recipe { get; set; } = new Recipe();
-        [BindProperty]
+
         public List<IngredientDetail> SaveIngredientDetails { get; set; }
 
         public IngredientDetail IngredientDetail { get; set; } =
@@ -53,13 +53,7 @@ namespace eYummy.Models.ViewModels
         public List<RecipeIngredient> UpdateRecipeIngredient { get; set; }
             = new List<RecipeIngredient>();
 
-        public static T First<T>(IEnumerable<T> items)
-        {
-            using (IEnumerator<T> iter = items.GetEnumerator())
-            {
-                iter.MoveNext();
-                return iter.Current;
-            }
-        }
+        [BindProperty]
+        public List<ChangedIngredientDetail> ChangedIngredientDetails { get; set; }
     }
 }
